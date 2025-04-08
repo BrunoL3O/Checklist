@@ -3,7 +3,6 @@
 #include <QtWidgets/QMainWindow>
 #include <QResizeEvent>
 #include "ui_Checklist.h"
-//#include "ui_AddWindow.h"
 #include "ButtonHandler.h"
 #include <vector>
 #include <qpushbutton.h>
@@ -25,5 +24,5 @@ private:
 
 
     void resizeEvent(QResizeEvent* resizeEvent);
-    void resizeButtons();
+    void closeEvent(QCloseEvent* closeEvent);
 };

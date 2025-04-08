@@ -26,9 +26,6 @@
     <QtRcc Include="Checklist.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
-    <QtUic Include="Checklist.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\TaskEntity.h">
@@ -57,13 +54,27 @@
     <ClCompile Include="src\TaskRepository.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\AddWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="include\Checklist.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="include\ButtonHandler.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="include\Checklist.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\AddWindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="Checklist.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="AddWindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
 </Project>

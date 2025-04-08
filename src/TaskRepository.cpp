@@ -2,7 +2,7 @@
 
 // constructor + destructor 
 
-int TaskRepository::getCount()
+size_t TaskRepository::getCount()
 {
     return taskList.size();
 }

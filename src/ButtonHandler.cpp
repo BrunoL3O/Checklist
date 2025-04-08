@@ -1,18 +1,23 @@
 #include "ButtonHandler.h"
 
-ButtonHandler::ButtonHandler(Ui::Checklist& ui) : UI(ui)
+ButtonHandler::ButtonHandler(Ui::Checklist& ui) : ui(ui)
 {
-
+	
 }
-
-
-//ButtonHandler::ButtonHandler()
-//{
-//
-//}
 
 ButtonHandler::~ButtonHandler()
 {
+	/// This, kids, is why you study pointers before making projects
+	/// in the *memory management heavy* language.
+	/// I'm ashamed to admit how much this took. I only pray this is proper design, since 
+	/// addW is spawned by the add button.
+
+	addW->close();
+	delete addW;
+}
+
+void ButtonHandler::closeWindow()
+{	
 
 }
 
@@ -23,18 +28,26 @@ void ButtonHandler::addButton()
 	// label adding
 	// TODO : add to task repository 
 
-	QLabel* newLabel = new QLabel(UI.taskBox);
+	/*qDebug() << ui.taskBox->children();
+
+	QLabel* newLabel = new QLabel(ui.taskBox);
+
 	newLabel->setText("Task" + QString::number(taskRepo.getCount()));
+
+	newLabel->setFrameStyle(QFrame::StyledPanel | QFrame::Shadow::Sunken);
+
+	newLabel->setMaximumSize(QSize(170, 30));
+
 	newLabel->setGeometry(newLabel->geometry().x(),
-		(UI.taskBox->children().count() - 2) * 20,
-		newLabel->geometry().width(),
-		newLabel->geometry().height());
+		(ui.taskBox->children().count() - 2) * 20,
+		170,
+		30);
 
 	QVBoxLayout* vbox;
 
-	if (UI.taskBox->layout())
+	if (ui.taskBox->layout())
 	{
-		vbox = qobject_cast<QVBoxLayout*>(UI.taskBox->layout());
+		vbox = qobject_cast<QVBoxLayout*>(ui.taskBox->layout());
 
 	}
 	else
@@ -45,25 +58,33 @@ void ButtonHandler::addButton()
 	vbox->addWidget(newLabel);
 
 
-	UI.taskBox->setLayout(vbox);
+	ui.taskBox->setLayout(vbox);
 
-	qDebug() << UI.taskBox->children().count();
+	qDebug() << ui.taskBox->children().count();*/
 
 
-	//addW.show();
+	addW->show();
+	ui.centralWidget->setEnabled(false);
 }
 
 void ButtonHandler::delButton()
 {
 	// delete 
+
+	addW->hide();
 }
 
 void ButtonHandler::showAllButton()
 {
-	qDebug() << UI.taskBox->children().count();
+	qDebug() << ui.taskBox->children().count();                 
 }
 
 void ButtonHandler::setupWindow()
+{
+
+}
+
+void ButtonHandler::addTask()
 {
 
 }

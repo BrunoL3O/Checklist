@@ -4,8 +4,8 @@
 #include <qdebug.h>
 #include <qradiobutton.h>
 #include "TaskRepository.h"
-//#include "DialogWindow.h"
 #include <QVBoxLayout>
+#include "AddWindow.h"
 
 
 class ButtonHandler : public QObject
@@ -14,18 +14,19 @@ class ButtonHandler : public QObject
 
 private:
 	TaskRepository taskRepo;
-	Ui::Checklist& UI;
-	//DialogWindow addW;
-	//QVBoxLayout *layout;
-	//Ui::Dialog& addUI;
+	Ui::Checklist ui;
+	AddWindow* addW = new AddWindow();
 
 	void setupWindow();
+	void addTask();
 
 
 public:
 	ButtonHandler(Ui::Checklist& ui);
 	//ButtonHandler();
 	~ButtonHandler();
+
+	void closeWindow();
 
 public slots:
 	void addButton();

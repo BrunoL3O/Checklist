@@ -98,11 +98,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <QtRcc Include="Checklist.qrc" />
-    <QtUic Include="Checklist.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="include\ButtonHandler.h" />
     <QtMoc Include="include\Checklist.h" />
+    <QtMoc Include="include\AddWindow.h" />
     <ClInclude Include="include\TaskEntity.h" />
     <ClInclude Include="include\TaskRepository.h" />
   </ItemGroup>
@@ -110,11 +110,16 @@
     <None Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\AddWindow.cpp" />
     <ClCompile Include="src\ButtonHandler.cpp" />
     <ClCompile Include="src\Checklist.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\TaskEntity.cpp" />
     <ClCompile Include="src\TaskRepository.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="AddWindow.ui" />
+    <QtUic Include="Checklist.ui" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

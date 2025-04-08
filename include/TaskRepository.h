@@ -3,13 +3,14 @@
 #include <vector>
 #include "TaskEntity.h"
 #include "ui_Checklist.h"
-//#include "ui_AddWindow.h"
+#include "ui_AddWindow.h"
 
 
 /// <summary>
 /// This class exists to keep track of all the tasks in the QGroupBox "taskBox".
 /// 
 /// </summary>
+
 class TaskRepository
 {
 private:
@@ -18,6 +19,6 @@ private:
 public:
 	/*TaskRepository();
 	~TaskRepository();*/
-	int getCount();
+	size_t getCount();
 };
 
