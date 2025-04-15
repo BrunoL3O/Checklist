@@ -5,6 +5,7 @@
 #include "ui_AddWindow.h"
 #include <vector>
 #include <qpushbutton.h>
+#include "ButtonHandler.h"
 
 class AddWindow : public QMainWindow
 {
@@ -15,10 +16,16 @@ public:
     ~AddWindow();
 
     void showWindow();
+    void setButtonHandler(ButtonHandler* bttnH);
+
+    QPushButton* getAdd();
+    QPushButton* getCancel();
 
 private:
     Ui::AddWindow ui;
 
     QSize baseSize;
     std::vector<QPushButton*> buttonList;
+
+    ButtonHandler* buttonHandler;
 };

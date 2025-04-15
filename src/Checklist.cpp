@@ -1,23 +1,29 @@
 #include "Checklist.h"
+#include "ButtonHandler.h"
+#include "AddWindow.h"
 
 Checklist::Checklist(QWidget* parent) : QMainWindow(parent)
 {
     ui.setupUi(this);
     ui.centralWidget->setLayout(new QVBoxLayout);
 
-    buttonHandler = new ButtonHandler(ui);
+    addW = new AddWindow();
+    buttonHandler = new ButtonHandler(ui, addW, this);
+    addW->setButtonHandler(buttonHandler);
 
+    this->setMinimumSize(QSize(600, 400));
 
     connect(ui.addButton, &QPushButton::clicked, buttonHandler, &ButtonHandler::addButton);
     connect(ui.delButton, &QPushButton::clicked, buttonHandler, &ButtonHandler::delButton);
     connect(ui.showAllButton, &QPushButton::clicked, buttonHandler, &ButtonHandler::showAllButton);
 
+    connect(addW->getAdd(), &QPushButton::clicked, buttonHandler, &ButtonHandler::addTask);
+    connect(addW->getCancel(), &QPushButton::clicked, buttonHandler, &ButtonHandler::cancelOperation);
 
     /// The reason for this tomfoolery is because closeEvent() (check below) is not being called upon clicking the "X" button
     /// at the top of the screen. No idea why. Destructor was not called either. Regardless, this fixes both issues,
     /// and they now execute. (order being closeEvent() -> destructor).
     /// 
-    /// This is necessary due to ButtonHandler completely handling the separate window.
     /// 
     /// The way this is done is the following : we connect the instance to the aboutToQuit signal, but instead of passing 
     /// a slot and a connection, we just pass a parameterless lambda function with an empty parameter list that runs "{}".
@@ -30,12 +36,27 @@ Checklist::Checklist(QWidget* parent) : QMainWindow(parent)
     buttonList.push_back(ui.addButton);
     buttonList.push_back(ui.delButton);
     buttonList.push_back(ui.showAllButton);
-
 }
 
 Checklist::~Checklist()
 {
-    
+    /// Deleting here again in ANY case . . .
+
+    if (addW)
+    {
+        delete addW;
+        addW = nullptr;
+    }
+    if (buttonHandler)
+    {
+        delete buttonHandler;
+        buttonHandler = nullptr;
+    }
+}
+
+void Checklist::setAddWindow(AddWindow* addw)
+{
+    addW = addw;
 }
 
 void Checklist::resizeEvent(QResizeEvent* event)
@@ -53,7 +74,18 @@ void Checklist::resizeEvent(QResizeEvent* event)
         );
     }
 
-    ui.taskBox->resize(QSize(ui.taskBox->width(), size.height() - 50));
+
+    ui.taskBox->resize(QSize(size.width() / 3 - 10, size.height() - 50));
+    ui.scrollArea->resize(QSize(ui.taskBox->width() - 5, ui.taskBox->height() - 30));
+
+    QMap<QPushButton*, TaskEntity> moddedList = buttonHandler->taskRepo.getTasks();
+
+    for (auto i = moddedList.begin(); i != moddedList.end(); ++i)
+        i.key()->resize(QSize(ui.scrollArea->size().width() - 30, 30));
+
+    buttonHandler->taskRepo.setTasks(moddedList);
+
+    qDebug() << event->size();
 
     QMainWindow::resizeEvent(event);
 }
@@ -61,6 +93,16 @@ void Checklist::resizeEvent(QResizeEvent* event)
 void Checklist::closeEvent(QCloseEvent* event)
 {
     qDebug() << buttonHandler;
-    delete buttonHandler;
+
+    if (addW)
+    {
+        delete addW;
+        addW = nullptr;
+    }
+    if (buttonHandler)
+    {
+        delete buttonHandler;
+        buttonHandler = nullptr;
+    }
 }
 

@@ -3,34 +3,43 @@
 #include <qobject.h>
 #include <qdebug.h>
 #include <qradiobutton.h>
-#include "TaskRepository.h"
 #include <QVBoxLayout>
-#include "AddWindow.h"
+#include "qscrollarea.h"
+#include "TaskRepository.h"
 
+class AddWindow;
+class Checklist;
 
 class ButtonHandler : public QObject
 {
 	Q_OBJECT
 
 private:
-	TaskRepository taskRepo;
 	Ui::Checklist ui;
-	AddWindow* addW = new AddWindow();
 
-	void setupWindow();
-	void addTask();
+	AddWindow* addW;
+	Checklist* chklst;
+	//QLabel* lastLabelSelected;
 
+	// void setupWindow();
 
 public:
-	ButtonHandler(Ui::Checklist& ui);
+	TaskRepository taskRepo;
+
+	ButtonHandler(Ui::Checklist& ui, AddWindow* addWindow, Checklist* chkl);
 	//ButtonHandler();
 	~ButtonHandler();
 
-	void closeWindow();
+	/*bool getLastLabel(QObject* labelWatched, QEvent* mouseClickEvent);
+	void closeWindow();*/
+	void labelMaker(QLabel& newLabel, TaskRepository taskRepo);
 
 public slots:
 	void addButton();
 	void delButton();
 	void showAllButton();
+
+	void addTask();
+	void cancelOperation();
 };
 

@@ -1,8 +1,10 @@
 #include "ButtonHandler.h"
+#include "AddWindow.h"
+#include "Checklist.h"
 
-ButtonHandler::ButtonHandler(Ui::Checklist& ui) : ui(ui)
+ButtonHandler::ButtonHandler(Ui::Checklist& ui, AddWindow* addWindow, Checklist* chkl) : ui(ui), addW(addWindow), chklst(chkl)
 {
-	
+	ui.sAreaContent->setGeometry(ui.taskBox->geometry());
 }
 
 ButtonHandler::~ButtonHandler()
@@ -12,15 +14,29 @@ ButtonHandler::~ButtonHandler()
 	/// I'm ashamed to admit how much this took. I only pray this is proper design, since 
 	/// addW is spawned by the add button.
 
-	addW->close();
-	delete addW;
+	//if (addW)
+	//{
+	//	addW->close();
+	//	delete addW;
+	//	addW = nullptr;
+	//}
 }
 
-void ButtonHandler::closeWindow()
-{	
-
-}
-
+//bool ButtonHandler::getLastLabel(QObject* labelWatched, QEvent* mouseClickEvent)
+//{
+//	if (mouseClickEvent->type() == QEvent::MouseButtonPress)
+//	{
+//			QLabel* lbl = qobject_cast<QLabel*>(labelWatched);
+//			if (lbl)
+//			{
+//				lastLabelSelected = lbl;
+//				qDebug() << lbl;
+//				return true;
+//			}
+//	}
+//
+//	return QObject::eventFilter(labelWatched, mouseClickEvent);
+//}
 
 void ButtonHandler::addButton()
 {
@@ -28,43 +44,54 @@ void ButtonHandler::addButton()
 	// label adding
 	// TODO : add to task repository 
 
-	/*qDebug() << ui.taskBox->children();
-
 	QLabel* newLabel = new QLabel(ui.taskBox);
 
-	newLabel->setText("Task" + QString::number(taskRepo.getCount()));
+	labelMaker(*newLabel, taskRepo);
 
-	newLabel->setFrameStyle(QFrame::StyledPanel | QFrame::Shadow::Sunken);
+	/// Debatable if this does anything but I'll keep it there . . .
+	newLabel->installEventFilter(this);
 
-	newLabel->setMaximumSize(QSize(170, 30));
+	newLabel->resize(QSize(155, 30));
 
-	newLabel->setGeometry(newLabel->geometry().x(),
-		(ui.taskBox->children().count() - 2) * 20,
-		170,
-		30);
+	/*QScrollArea* scrollArea = new QScrollArea(ui.taskBox);
+
+	QWidget* areaThing = new QWidget();
+	QVBoxLayout* areaLayout = new QVBoxLayout(areaThing);
+	areaLayout->addWidget(newLabel);*/
 
 	QVBoxLayout* vbox;
 
-	if (ui.taskBox->layout())
+	if (ui.sAreaContent->layout())
 	{
-		vbox = qobject_cast<QVBoxLayout*>(ui.taskBox->layout());
-
+		vbox = qobject_cast<QVBoxLayout*>(ui.sAreaContent->layout());
 	}
 	else
 	{
 		vbox = new QVBoxLayout();
 	}
 
+
+	/*vbox->setSpacing(10);
 	vbox->addWidget(newLabel);
+	ui.sAreaContent->setLayout(vbox);*/
 
+	//ui.taskBox->setLayout(vbox);
 
-	ui.taskBox->setLayout(vbox);
+	if (addW)
+		addW->show();
+	else
+	{
+		addW = new AddWindow();
+		addW->setButtonHandler(this);
+		addW->show();
 
-	qDebug() << ui.taskBox->children().count();*/
+		connect(addW->getAdd(), &QPushButton::clicked, this, &ButtonHandler::addTask);
+		connect(addW->getCancel(), &QPushButton::clicked, this, &ButtonHandler::cancelOperation);
 
+		chklst->setAddWindow(addW);
+	}
 
-	addW->show();
-	ui.centralWidget->setEnabled(false);
+	qDebug() << addW;
 }
 
 void ButtonHandler::delButton()
@@ -79,12 +106,35 @@ void ButtonHandler::showAllButton()
 	qDebug() << ui.taskBox->children().count();                 
 }
 
-void ButtonHandler::setupWindow()
+void ButtonHandler::addTask()
 {
 
 }
 
-void ButtonHandler::addTask()
+void ButtonHandler::cancelOperation()
 {
+	/// I *could* just hide it, yes.
+	/// But that doesn't clear the fields. 
+	/// And it's kind of a pain to get to them.
+
+	qDebug() << addW;
+
+	delete addW;
+	addW = nullptr;
+}
+
+
+void ButtonHandler::labelMaker(QLabel& newLabel, TaskRepository taskRepo)
+{
+	newLabel.setText("Task" + QString::number(taskRepo.getCount()));
+
+	newLabel.setFrameStyle(QFrame::StyledPanel | QFrame::Shadow::Sunken);
+
+	newLabel.setGeometry(newLabel.geometry().x(),
+		(ui.taskBox->children().count() - 2) * 20,
+		170,
+		30);
+
+	newLabel.setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
 }

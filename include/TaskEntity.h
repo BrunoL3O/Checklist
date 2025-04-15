@@ -5,9 +5,9 @@
 class TaskEntity
 {
 
-	// Each QPushButton has one associated TaskEntity.
-	// taskName is the text that appears on the button,
-	// and taskDesc is the text that appears when holding mouse over the button.
+	/// Each QPushButton has one associated TaskEntity.
+	/// taskName is the text that appears on the button,
+	/// and taskDesc is the text that appears when holding mouse over the button.
 
 private:
 	std::string taskName;

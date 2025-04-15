@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "TaskEntity.h"
+#include <map>
 #include "ui_Checklist.h"
 #include "ui_AddWindow.h"
 
@@ -14,11 +15,14 @@
 class TaskRepository
 {
 private:
-	std::vector<TaskEntity> taskList;
-	std::vector<QPushButton> buttonList;
+	QVector<QPushButton*> buttonList;
+	QMap<QPushButton*, TaskEntity> taskList;
+
 public:
 	/*TaskRepository();
 	~TaskRepository();*/
 	size_t getCount();
+	QMap<QPushButton*, TaskEntity> getTasks();
+	void setTasks(QMap<QPushButton*, TaskEntity> newList);
 };
 

@@ -56,6 +56,9 @@
     <property name="text">
      <string>Add</string>
     </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QPushButton" name="delButton">
     <property name="enabled">
@@ -113,7 +116,7 @@
       <x>10</x>
       <y>10</y>
       <width>190</width>
-      <height>330</height>
+      <height>300</height>
      </rect>
     </property>
     <property name="title">
@@ -122,39 +125,31 @@
     <property name="alignment">
      <set>Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignTop</set>
     </property>
-    <widget class="QLabel" name="copylabel">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
+    <widget class="QScrollArea" name="scrollArea">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>170</width>
-       <height>30</height>
+       <x>0</x>
+       <y>20</y>
+       <width>185</width>
+       <height>280</height>
       </rect>
      </property>
-     <property name="mouseTracking">
-      <bool>false</bool>
-     </property>
-     <property name="focusPolicy">
-      <enum>Qt::FocusPolicy::ClickFocus</enum>
-     </property>
-     <property name="toolTip">
-      <string/>
-     </property>
      <property name="frameShape">
-      <enum>QFrame::Shape::StyledPanel</enum>
+      <enum>QFrame::Shape::NoFrame</enum>
      </property>
-     <property name="frameShadow">
-      <enum>QFrame::Shadow::Sunken</enum>
+     <property name="widgetResizable">
+      <bool>true</bool>
      </property>
-     <property name="lineWidth">
-      <number>0</number>
-     </property>
-     <property name="text">
-      <string extracomment="AWTAWRAWA">TextLabel</string>
-     </property>
+     <widget class="QWidget" name="sAreaContent">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>185</width>
+        <height>280</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
    </widget>
    <zorder>delButton</zorder>
