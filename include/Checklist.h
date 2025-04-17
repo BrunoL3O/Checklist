@@ -19,6 +19,7 @@ public:
     ~Checklist();
 
     void setAddWindow(AddWindow* add);
+    void reinitPointer(AddWindow* add);
 
 private:
     Ui::Checklist ui;

@@ -6,6 +6,7 @@
 #include <vector>
 #include <qpushbutton.h>
 #include "ButtonHandler.h"
+#include "exception"
 
 class AddWindow : public QMainWindow
 {
@@ -20,6 +21,9 @@ public:
 
     QPushButton* getAdd();
     QPushButton* getCancel();
+
+    QPlainTextEdit* getDesc();
+    QPlainTextEdit* getTitle();
 
 private:
     Ui::AddWindow ui;

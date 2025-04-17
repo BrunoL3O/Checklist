@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "qstring.h"
 
 class TaskEntity
 {
@@ -15,10 +16,13 @@ private:
 	int taskID;
 
 public:
-	TaskEntity();
+	TaskEntity(int id, std::string taskName, std::string taskDesc);
 	~TaskEntity();
+
 	std::string getName();
 	std::string getDesc();
 	int getID();
+
+	QString toString();
 };
 

@@ -78,7 +78,9 @@ void ButtonHandler::addButton()
 	//ui.taskBox->setLayout(vbox);
 
 	if (addW)
+	{
 		addW->show();
+	}
 	else
 	{
 		addW = new AddWindow();
@@ -103,11 +105,35 @@ void ButtonHandler::delButton()
 
 void ButtonHandler::showAllButton()
 {
-	qDebug() << ui.taskBox->children().count();                 
+	qDebug() << taskRepo.getSize();
 }
 
 void ButtonHandler::addTask()
 {
+	std::string str1, str2;
+	str1 = addW->getTitle()->toPlainText().toStdString();
+	str2 = addW->getDesc()->toPlainText().toStdString();
+	QPushButton* buton = taskRepo.addTask(str1, str2);
+
+	QVBoxLayout* vbox;
+
+	if (ui.sAreaContent->layout())
+	{
+		vbox = qobject_cast<QVBoxLayout*>(ui.sAreaContent->layout());
+	}
+	else
+	{
+		vbox = new QVBoxLayout();
+		vbox->setSpacing(10);
+	}
+
+	vbox->addWidget(buton);
+	ui.sAreaContent->setLayout(vbox);
+	//ui.taskBox->setLayout(vbox);
+
+	delete addW;
+	addW = nullptr;
+	chklst->reinitPointer(addW);
 
 }
 
@@ -121,12 +147,13 @@ void ButtonHandler::cancelOperation()
 
 	delete addW;
 	addW = nullptr;
+	chklst->reinitPointer(addW);
 }
 
 
 void ButtonHandler::labelMaker(QLabel& newLabel, TaskRepository taskRepo)
 {
-	newLabel.setText("Task" + QString::number(taskRepo.getCount()));
+	newLabel.setText("Task" + QString::number(taskRepo.getSize()));
 
 	newLabel.setFrameStyle(QFrame::StyledPanel | QFrame::Shadow::Sunken);
 

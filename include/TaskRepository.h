@@ -15,13 +15,17 @@
 class TaskRepository
 {
 private:
-	QVector<QPushButton*> buttonList;
 	QMap<QPushButton*, TaskEntity> taskList;
 
 public:
-	/*TaskRepository();
-	~TaskRepository();*/
-	size_t getCount();
+	TaskRepository();
+	~TaskRepository();
+
+	QPushButton* addTask(std::string taskN, std::string taskD);
+
+	void doButton(QPushButton* button);
+
+	size_t getSize();
 	QMap<QPushButton*, TaskEntity> getTasks();
 	void setTasks(QMap<QPushButton*, TaskEntity> newList);
 };

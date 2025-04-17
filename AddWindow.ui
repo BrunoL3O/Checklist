@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>403</width>
     <height>350</height>
    </rect>
   </property>
@@ -14,31 +14,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-                                  <!-- 
-    To whoever's reading this, I am very much aware that the geometry seems awkward 
-    but this just seemed the best option? For some reason, these look the best to me. Even if weird.
-                                  /shrug.
-                                  -->
-   <widget class="QTextEdit" name="taskTitleBox">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>50</y>
-      <width>221</width>
-      <height>41</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QTextEdit" name="textEdit_2">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>159</y>
-      <width>380</width>
-      <height>170</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="Add">
     <property name="geometry">
      <rect>
@@ -125,13 +100,36 @@
      <string>  Task Description</string>
     </property>
    </widget>
+   <widget class="QPlainTextEdit" name="taskTitleBox">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>221</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="plainText">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="taskDescBox">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>159</y>
+      <width>380</width>
+      <height>170</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>403</width>
      <height>25</height>
     </rect>
    </property>

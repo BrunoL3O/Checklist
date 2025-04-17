@@ -7,9 +7,16 @@ Checklist::Checklist(QWidget* parent) : QMainWindow(parent)
     ui.setupUi(this);
     ui.centralWidget->setLayout(new QVBoxLayout);
 
+    qDebug() << "first";
+
     addW = new AddWindow();
+
+    qDebug() << addW;
+
     buttonHandler = new ButtonHandler(ui, addW, this);
     addW->setButtonHandler(buttonHandler);
+
+    qDebug() << "second";
 
     this->setMinimumSize(QSize(600, 400));
 
@@ -59,6 +66,16 @@ void Checklist::setAddWindow(AddWindow* addw)
     addW = addw;
 }
 
+void Checklist::reinitPointer(AddWindow* adW)
+{
+    /// "read access violation" exceptions hate this one trick !
+    addW = adW;
+
+    /// jokes aside, this can (and probably will) be redone
+    /// either with smart pointers, or with emit signals and all those shenanigans.
+    /// but this works for now and doesn't go boom so)
+}
+
 void Checklist::resizeEvent(QResizeEvent* event)
 {
     QSize size = event->size();
@@ -77,6 +94,8 @@ void Checklist::resizeEvent(QResizeEvent* event)
 
     ui.taskBox->resize(QSize(size.width() / 3 - 10, size.height() - 50));
     ui.scrollArea->resize(QSize(ui.taskBox->width() - 5, ui.taskBox->height() - 30));
+    ui.plainTextEdit->resize(QSize(size.width() - 250, (size.height() / 3) - 10));
+    //ui.plainTextEdit->setGeometry(size.width() + 240, size.height() + 230, ui.plainTextEdit->width(), ui.plainTextEdit->height());
 
     QMap<QPushButton*, TaskEntity> moddedList = buttonHandler->taskRepo.getTasks();
 

@@ -1,8 +1,40 @@
 #include "TaskRepository.h"
 
-// constructor + destructor 
+TaskRepository::TaskRepository()
+{
 
-size_t TaskRepository::getCount()
+}
+
+TaskRepository::~TaskRepository()
+{
+
+}
+
+QPushButton* TaskRepository::addTask(std::string taskN, std::string taskD)
+{
+    TaskEntity newTask = TaskEntity(taskList.count() + 1, taskN, taskD);
+    QPushButton* pairedButton = new QPushButton();
+    pairedButton->setText(QString::fromStdString(taskN));
+    pairedButton->setToolTip(QString::fromStdString(taskD));
+
+    doButton(pairedButton);
+
+    taskList.insert(pairedButton, newTask);
+
+    qDebug() << pairedButton;
+
+    return pairedButton;
+}
+
+void TaskRepository::doButton(QPushButton* button)
+{
+    /// do button
+    /// make it fancy
+    /// 
+    /// this will be done later. i do not wish to code ui anymore
+}
+
+size_t TaskRepository::getSize()
 {
     return taskList.size();
 }

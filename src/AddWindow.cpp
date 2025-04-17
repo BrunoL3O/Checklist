@@ -5,6 +5,8 @@ AddWindow::AddWindow(QWidget* parent) : QMainWindow(parent)
 	ui.setupUi(this);
 	this->setFixedSize(size());
 	setWindowFlags(Qt::Window | Qt::MSWindowsFixedSizeDialogHint);
+
+	qDebug() << this;
 }
 
 AddWindow::~AddWindow()
@@ -25,6 +27,16 @@ QPushButton* AddWindow::getAdd()
 QPushButton* AddWindow::getCancel()
 {
 	return ui.Cancel;
+}
+
+QPlainTextEdit* AddWindow::getDesc()
+{
+	return ui.taskDescBox;
+}
+
+QPlainTextEdit* AddWindow::getTitle()
+{
+	return ui.taskTitleBox;
 }
 
 void AddWindow::showWindow()

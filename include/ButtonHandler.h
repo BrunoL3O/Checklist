@@ -16,6 +16,7 @@ class ButtonHandler : public QObject
 
 private:
 	Ui::Checklist ui;
+	Ui::AddWindow ui2;
 
 	AddWindow* addW;
 	Checklist* chklst;

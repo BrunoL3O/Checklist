@@ -1,10 +1,10 @@
 #include "TaskEntity.h"
 
-TaskEntity::TaskEntity()
+TaskEntity::TaskEntity(int id, std::string taskN, std::string taskD)
 {
-	taskID = -1;
-	taskDesc = "";
-	taskName = "";
+	taskID = id;
+	taskName = taskN;
+	taskDesc = taskD;
 }
 
 TaskEntity::~TaskEntity()
@@ -25,4 +25,12 @@ std::string TaskEntity::getName()
 int TaskEntity::getID()
 {
 	return taskID;
+}
+
+QString TaskEntity::toString()
+{
+	return QString::fromStdString("--------------------\nTask Title: " + taskName +
+		"\nTask Description: " + taskDesc +
+		"\nID: " + std::to_string(taskID) +
+		"\n");
 }
