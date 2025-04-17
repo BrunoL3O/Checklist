@@ -133,7 +133,7 @@ void ButtonHandler::addTask()
 
 	delete addW;
 	addW = nullptr;
-	chklst->reinitPointer(addW);
+	chklst->setAddWindow(addW);
 
 }
 
@@ -147,7 +147,7 @@ void ButtonHandler::cancelOperation()
 
 	delete addW;
 	addW = nullptr;
-	chklst->reinitPointer(addW);
+	chklst->setAddWindow(addW);
 }
 
 

@@ -63,17 +63,14 @@ Checklist::~Checklist()
 
 void Checklist::setAddWindow(AddWindow* addw)
 {
-    addW = addw;
-}
-
-void Checklist::reinitPointer(AddWindow* adW)
-{
     /// "read access violation" exceptions hate this one trick !
-    addW = adW;
+    /// 
+    /// while this is just a setter
+    /// it also fixes some delete shenanigans that probably are not even a question
+    /// if using smart pointers or signals or other stuff.
+    /// this works though and will probably be changed later
 
-    /// jokes aside, this can (and probably will) be redone
-    /// either with smart pointers, or with emit signals and all those shenanigans.
-    /// but this works for now and doesn't go boom so)
+    addW = addw;
 }
 
 void Checklist::resizeEvent(QResizeEvent* event)
