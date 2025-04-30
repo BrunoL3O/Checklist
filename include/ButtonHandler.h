@@ -20,7 +20,7 @@ private:
 
 	AddWindow* addW;
 	Checklist* chklst;
-	//QLabel* lastLabelSelected;
+	QPushButton* lastPress = nullptr;
 
 	// void setupWindow();
 

@@ -152,7 +152,7 @@
      </widget>
     </widget>
    </widget>
-   <widget class="QPlainTextEdit" name="plainTextEdit">
+   <widget class="QPlainTextEdit" name="taskDesc">
     <property name="geometry">
      <rect>
       <x>240</x>
@@ -166,7 +166,7 @@
    <zorder>addButton</zorder>
    <zorder>showAllButton</zorder>
    <zorder>taskBox</zorder>
-   <zorder>plainTextEdit</zorder>
+   <zorder>taskDesc</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

@@ -22,22 +22,6 @@ ButtonHandler::~ButtonHandler()
 	//}
 }
 
-//bool ButtonHandler::getLastLabel(QObject* labelWatched, QEvent* mouseClickEvent)
-//{
-//	if (mouseClickEvent->type() == QEvent::MouseButtonPress)
-//	{
-//			QLabel* lbl = qobject_cast<QLabel*>(labelWatched);
-//			if (lbl)
-//			{
-//				lastLabelSelected = lbl;
-//				qDebug() << lbl;
-//				return true;
-//			}
-//	}
-//
-//	return QObject::eventFilter(labelWatched, mouseClickEvent);
-//}
-
 void ButtonHandler::addButton()
 {
 
@@ -100,7 +84,17 @@ void ButtonHandler::delButton()
 {
 	// delete 
 
-	addW->hide();
+	//addW->hide();
+
+	if (lastPress != nullptr)
+	{
+		QVBoxLayout* boxL = qobject_cast<QVBoxLayout*>(ui.sAreaContent->layout());
+		boxL->removeWidget(lastPress);
+		taskRepo.removeTask(lastPress);
+		lastPress->deleteLater();
+		lastPress = nullptr;
+		ui.taskDesc->clear();
+	}
 }
 
 void ButtonHandler::showAllButton()
@@ -114,6 +108,25 @@ void ButtonHandler::addTask()
 	str1 = addW->getTitle()->toPlainText().toStdString();
 	str2 = addW->getDesc()->toPlainText().toStdString();
 	QPushButton* buton = taskRepo.addTask(str1, str2);
+	
+
+	/// lambda functions have to be the best thing I know in this language
+	/// what do you mean I can have this much convenience at my fingertips??
+	/// jokes aside,
+	/// this makes it so the button sends ButtonHandler the clicked signal,
+	/// then it calls the lambda function :
+	/// we get the task, and display the task's description
+	/// and the last button (useful for delete shenanigans..)
+
+	/// lambda function dub counter : 2
+
+
+	connect(buton, &QPushButton::clicked, this, [this, buton]() {
+		TaskEntity task = taskRepo.getTask(buton);
+		ui.taskDesc->setPlainText(QString::fromStdString(task.getDesc()));
+		lastPress = buton;
+		qDebug() << lastPress;
+		});
 
 	QVBoxLayout* vbox;
 

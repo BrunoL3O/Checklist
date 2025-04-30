@@ -33,7 +33,7 @@ Checklist::Checklist(QWidget* parent) : QMainWindow(parent)
     /// 
     /// 
     /// The way this is done is the following : we connect the instance to the aboutToQuit signal, but instead of passing 
-    /// a slot and a connection, we just pass a parameterless lambda function with an empty parameter list that runs "{}".
+    /// a slot and a connection, we just pass a lambda function with an empty capture and an empty parameter list that runs "{}".
     /// 
     /// Three cheers for C++11 !
     
@@ -91,7 +91,7 @@ void Checklist::resizeEvent(QResizeEvent* event)
 
     ui.taskBox->resize(QSize(size.width() / 3 - 10, size.height() - 50));
     ui.scrollArea->resize(QSize(ui.taskBox->width() - 5, ui.taskBox->height() - 30));
-    ui.plainTextEdit->resize(QSize(size.width() - 250, (size.height() / 3) - 10));
+    ui.taskDesc->resize(QSize(size.width() - 250, (size.height() / 3) - 10));
     //ui.plainTextEdit->setGeometry(size.width() + 240, size.height() + 230, ui.plainTextEdit->width(), ui.plainTextEdit->height());
 
     QMap<QPushButton*, TaskEntity> moddedList = buttonHandler->taskRepo.getTasks();

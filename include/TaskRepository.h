@@ -27,6 +27,9 @@ public:
 
 	size_t getSize();
 	QMap<QPushButton*, TaskEntity> getTasks();
+	TaskEntity getTask(QPushButton* buton);
+	
+	void removeTask(QPushButton* toRemove);
 	void setTasks(QMap<QPushButton*, TaskEntity> newList);
 };
 

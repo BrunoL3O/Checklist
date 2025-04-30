@@ -20,9 +20,6 @@ QPushButton* TaskRepository::addTask(std::string taskN, std::string taskD)
     doButton(pairedButton);
 
     taskList.insert(pairedButton, newTask);
-
-    qDebug() << pairedButton;
-
     return pairedButton;
 }
 
@@ -42,6 +39,16 @@ size_t TaskRepository::getSize()
 QMap<QPushButton*, TaskEntity> TaskRepository::getTasks()
 {
     return taskList;
+}
+
+TaskEntity TaskRepository::getTask(QPushButton* buton)
+{
+    return taskList.find(buton).value();
+}
+
+void TaskRepository::removeTask(QPushButton* toRemove)
+{
+    taskList.remove(toRemove);
 }
 
 void TaskRepository::setTasks(QMap<QPushButton*, TaskEntity> newList)
