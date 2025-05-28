@@ -5,6 +5,38 @@
 ButtonHandler::ButtonHandler(Ui::Checklist& ui, AddWindow* addWindow, Checklist* chkl) : ui(ui), addW(addWindow), chklst(chkl)
 {
 	ui.sAreaContent->setGeometry(ui.taskBox->geometry());
+
+	QMap<QPushButton*, TaskEntity> taskMap;
+	taskMap = taskRepo.getTasks();
+
+	for (auto it = taskMap.begin(); it != taskMap.end(); ++it)
+	{
+		QPushButton* buton = it.key();
+		connect(buton, &QPushButton::clicked, this, [this, buton, ui]() {
+			TaskEntity task = taskRepo.getTask(buton);
+			ui.taskDesc->setPlainText(QString::fromStdString(task.getDesc()));
+			lastPress = buton;
+			qDebug() << lastPress;
+			});
+	}
+
+	QVBoxLayout* vbox;
+	if (ui.sAreaContent->layout())
+	{
+		vbox = qobject_cast<QVBoxLayout*>(ui.sAreaContent->layout());
+	}
+	else
+	{
+		vbox = new QVBoxLayout(ui.sAreaContent);
+		vbox->setSpacing(10);
+		vbox->setAlignment(Qt::AlignTop);
+	}
+	
+	for (auto it = taskMap.begin(); it != taskMap.end(); ++it)
+	{
+		vbox->addWidget(it.key());
+	}
+	ui.sAreaContent->setLayout(vbox);
 }
 
 ButtonHandler::~ButtonHandler()
@@ -24,25 +56,6 @@ ButtonHandler::~ButtonHandler()
 
 void ButtonHandler::addButton()
 {
-
-	// label adding
-	// TODO : add to task repository 
-
-	QLabel* newLabel = new QLabel(ui.taskBox);
-
-	labelMaker(*newLabel, taskRepo);
-
-	/// Debatable if this does anything but I'll keep it there . . .
-	newLabel->installEventFilter(this);
-
-	newLabel->resize(QSize(155, 30));
-
-	/*QScrollArea* scrollArea = new QScrollArea(ui.taskBox);
-
-	QWidget* areaThing = new QWidget();
-	QVBoxLayout* areaLayout = new QVBoxLayout(areaThing);
-	areaLayout->addWidget(newLabel);*/
-
 	QVBoxLayout* vbox;
 
 	if (ui.sAreaContent->layout())
@@ -53,13 +66,6 @@ void ButtonHandler::addButton()
 	{
 		vbox = new QVBoxLayout();
 	}
-
-
-	/*vbox->setSpacing(10);
-	vbox->addWidget(newLabel);
-	ui.sAreaContent->setLayout(vbox);*/
-
-	//ui.taskBox->setLayout(vbox);
 
 	if (addW)
 	{
@@ -82,10 +88,6 @@ void ButtonHandler::addButton()
 
 void ButtonHandler::delButton()
 {
-	// delete 
-
-	//addW->hide();
-
 	if (lastPress != nullptr)
 	{
 		QVBoxLayout* boxL = qobject_cast<QVBoxLayout*>(ui.sAreaContent->layout());
@@ -136,13 +138,13 @@ void ButtonHandler::addTask()
 	}
 	else
 	{
-		vbox = new QVBoxLayout();
+		vbox = new QVBoxLayout(ui.sAreaContent);
 		vbox->setSpacing(10);
+		vbox->setAlignment(Qt::AlignTop);
 	}
 
 	vbox->addWidget(buton);
 	ui.sAreaContent->setLayout(vbox);
-	//ui.taskBox->setLayout(vbox);
 
 	delete addW;
 	addW = nullptr;
@@ -161,20 +163,4 @@ void ButtonHandler::cancelOperation()
 	delete addW;
 	addW = nullptr;
 	chklst->setAddWindow(addW);
-}
-
-
-void ButtonHandler::labelMaker(QLabel& newLabel, TaskRepository taskRepo)
-{
-	newLabel.setText("Task" + QString::number(taskRepo.getSize()));
-
-	newLabel.setFrameStyle(QFrame::StyledPanel | QFrame::Shadow::Sunken);
-
-	newLabel.setGeometry(newLabel.geometry().x(),
-		(ui.taskBox->children().count() - 2) * 20,
-		170,
-		30);
-
-	newLabel.setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-
 }

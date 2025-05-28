@@ -5,6 +5,12 @@
 #include <map>
 #include "ui_Checklist.h"
 #include "ui_AddWindow.h"
+#include "qjsonarray.h"
+#include "qjsondocument.h"
+#include "qjsonobject.h"
+#include "qfile.h"
+#include "qdir.h"
+#include <QStandardPaths>
 
 
 /// <summary>
@@ -16,6 +22,9 @@ class TaskRepository
 {
 private:
 	QMap<QPushButton*, TaskEntity> taskList;
+
+	QJsonArray taskJSON;
+	QString path;
 
 public:
 	TaskRepository();
@@ -31,5 +40,9 @@ public:
 	
 	void removeTask(QPushButton* toRemove);
 	void setTasks(QMap<QPushButton*, TaskEntity> newList);
+
+	QJsonDocument load();
+	void save();
+	void loadRepo();
 };
 

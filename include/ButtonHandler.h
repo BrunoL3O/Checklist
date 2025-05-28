@@ -6,6 +6,7 @@
 #include <QVBoxLayout>
 #include "qscrollarea.h"
 #include "TaskRepository.h"
+#include "qdir.h"
 
 class AddWindow;
 class Checklist;
@@ -28,12 +29,7 @@ public:
 	TaskRepository taskRepo;
 
 	ButtonHandler(Ui::Checklist& ui, AddWindow* addWindow, Checklist* chkl);
-	//ButtonHandler();
 	~ButtonHandler();
-
-	/*bool getLastLabel(QObject* labelWatched, QEvent* mouseClickEvent);
-	void closeWindow();*/
-	void labelMaker(QLabel& newLabel, TaskRepository taskRepo);
 
 public slots:
 	void addButton();

@@ -32,4 +32,5 @@ private:
 
     void resizeEvent(QResizeEvent* resizeEvent);
     void closeEvent(QCloseEvent* closeEvent);
+    void addPress();
 };

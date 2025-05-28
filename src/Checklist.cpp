@@ -7,22 +7,22 @@ Checklist::Checklist(QWidget* parent) : QMainWindow(parent)
     ui.setupUi(this);
     ui.centralWidget->setLayout(new QVBoxLayout);
 
-    qDebug() << "first";
+    // qDebug() << "first";
 
     addW = new AddWindow();
 
-    qDebug() << addW;
+    // qDebug() << addW;
 
     buttonHandler = new ButtonHandler(ui, addW, this);
     addW->setButtonHandler(buttonHandler);
 
-    qDebug() << "second";
+    // qDebug() << "second";
 
     this->setMinimumSize(QSize(600, 400));
-
+    
     connect(ui.addButton, &QPushButton::clicked, buttonHandler, &ButtonHandler::addButton);
     connect(ui.delButton, &QPushButton::clicked, buttonHandler, &ButtonHandler::delButton);
-    connect(ui.showAllButton, &QPushButton::clicked, buttonHandler, &ButtonHandler::showAllButton);
+    //connect(ui.showAllButton, &QPushButton::clicked, buttonHandler, &ButtonHandler::showAllButton);
 
     connect(addW->getAdd(), &QPushButton::clicked, buttonHandler, &ButtonHandler::addTask);
     connect(addW->getCancel(), &QPushButton::clicked, buttonHandler, &ButtonHandler::cancelOperation);
@@ -42,7 +42,7 @@ Checklist::Checklist(QWidget* parent) : QMainWindow(parent)
 
     buttonList.push_back(ui.addButton);
     buttonList.push_back(ui.delButton);
-    buttonList.push_back(ui.showAllButton);
+    //buttonList.push_back(ui.showAllButton);
 }
 
 Checklist::~Checklist()
@@ -81,27 +81,46 @@ void Checklist::resizeEvent(QResizeEvent* event)
     {
         buttonList[i - 1]->resize(size.width() / 2.5, size.height() / 8);
         buttonList[i - 1]->setGeometry(
-            QRect(size.width() - 15 - buttonList[i - 1]->size().width(),
-                15 + (i - 1) * (buttonList[i - 1]->size().height() + 15),
-                buttonList[i - 1]->geometry().width(),
-                buttonList[i - 1]->geometry().height())
+            QRect(
+                    size.width() - 15 - buttonList[i - 1]->size().width(),
+                    15 + (i - 1) * (buttonList[i - 1]->size().height() + 15),   
+                    buttonList[i - 1]->geometry().width(),
+                    buttonList[i - 1]->geometry().height()
+                )
         );
     }
 
 
     ui.taskBox->resize(QSize(size.width() / 3 - 10, size.height() - 50));
+
+    ui.taskDesc->resize(size.width() / 1.714, size.height() / 3.076);
+    ui.taskDesc->setGeometry(QRect(
+        size.width() - 15 - ui.taskDesc->size().width(),
+        size.height() - ui.taskDesc->height() - 40,
+        ui.taskDesc->geometry().width(),
+        ui.taskDesc->geometry().height()
+    ));
+
     ui.scrollArea->resize(QSize(ui.taskBox->width() - 5, ui.taskBox->height() - 30));
-    ui.taskDesc->resize(QSize(size.width() - 250, (size.height() / 3) - 10));
-    //ui.plainTextEdit->setGeometry(size.width() + 240, size.height() + 230, ui.plainTextEdit->width(), ui.plainTextEdit->height());
+    ui.sAreaContent->resize(ui.scrollArea->size());
 
     QMap<QPushButton*, TaskEntity> moddedList = buttonHandler->taskRepo.getTasks();
 
+
+    QPushButton* prevButton;
+    int nr = 1;
+    prevButton = nullptr;
+
     for (auto i = moddedList.begin(); i != moddedList.end(); ++i)
-        i.key()->resize(QSize(ui.scrollArea->size().width() - 30, 30));
+    {
+        i.key()->resize(QSize(ui.scrollArea->size().width() - 30, size.height() / 12));
+    }
+    
+
 
     buttonHandler->taskRepo.setTasks(moddedList);
 
-    qDebug() << event->size();
+    qDebug() << ui.taskDesc->x() << " ||| " << ui.taskDesc->y();
 
     QMainWindow::resizeEvent(event);
 }
