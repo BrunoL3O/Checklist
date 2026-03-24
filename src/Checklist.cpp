@@ -42,7 +42,7 @@ Checklist::Checklist(QWidget* parent) : QMainWindow(parent)
 
     buttonList.push_back(ui.addButton);
     buttonList.push_back(ui.delButton);
-    //buttonList.push_back(ui.showAllButton);
+    // buttonList.push_back(ui.showAllButton);
 }
 
 Checklist::~Checklist()
